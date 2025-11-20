@@ -6,6 +6,7 @@ from plotly.graph_objects import Scatter, Figure
 
 ### NE PAS MODIFIER ###
 def syr_plot(lsyr):
+    """Affiche la courbe de la suite de Syracuse à l'aide de plotly."""
     title = "Syracuse" + " (n = " + str(lsyr[0]) + " )"
     fig = Figure({  'layout':   { 'title': {'text': title},
                                 'xaxis': {'title': {'text':"x"}},
@@ -14,16 +15,15 @@ def syr_plot(lsyr):
                 }
     )
 
-    x = [ i for i in range(len(lsyr)) ]
+    x = list(range(len(lsyr)))
     t = Scatter(x=x, y=lsyr, mode="lines+markers", marker_color = "blue")
     fig.add_trace(t)
     fig.show()
     # fig.write_html('fig.html', include_plotlyjs='cdn')
-    return None
 #######################
 
 def syracuse_l(n):
-    """retourne la suite de Syracuse de source n
+    """Retourne la suite de Syracuse de source n.
 
     Args:
         n (int): la source de la suite
@@ -31,13 +31,16 @@ def syracuse_l(n):
     Returns:
         list: la suite de Syracuse de source n
     """
-
-    # votre code ici 
-    l = [ ]
+    l = [n]
+    while l[-1] != 1:
+        if l[-1] % 2 == 0:
+            l.append(l[-1] // 2)
+        else:
+            l.append(3 * l[-1] + 1)
     return l
 
 def temps_de_vol(l):
-    """Retourne le temps de vol d'une suite de Syracuse
+    """Retourne le temps de vol d'une suite de Syracuse.
 
     Args:
         l (list): la suite de Syracuse
@@ -45,14 +48,10 @@ def temps_de_vol(l):
     Returns:
         int: le temps de vol
     """
-    
-    # votre code ici
-
-    n = 0
-    return n
+    return len(l) - 1
 
 def temps_de_vol_en_altitude(l):
-    """Retourne le temps de vol en altitude d'une suite de Syracuse
+    """Retourne le temps de vol en altitude d'une suite de Syracuse.
 
     Args:
         l (list): la suite de Syracuse
@@ -60,15 +59,18 @@ def temps_de_vol_en_altitude(l):
     Returns:
         int: le temps de vol en altitude
     """
-
-    # votre code ici
-
-    n = 0
-    return n
+    source = l[0]
+    count = 0
+    for x in l[1:]:
+        if x > source:
+            count += 1
+        else:
+            break
+    return count
 
 
 def altitude_maximale(l):
-    """retourne l'altitude maximale d'une suite de Syracuse
+    """Retourne l'altitude maximale d'une suite de Syracuse.
 
     Args:
         l (list): la suite de Syracuse
@@ -76,19 +78,14 @@ def altitude_maximale(l):
     Returns:
         int: l'altitude maximale
     """
-    
-    # votre code ici
-    
-    n = 0
-    return n
+    return max(l)
 
 
 #### Fonction principale
 
 
 def main():
-
-    # vos appels à la fonction secondaire ici
+    """Fonction principale pour tester les fonctions de la suite de Syracuse."""
     lsyr = syracuse_l(15)
     syr_plot(lsyr)
     print(temps_de_vol(lsyr))
